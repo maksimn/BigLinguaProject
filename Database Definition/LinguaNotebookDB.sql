@@ -22,7 +22,7 @@ GO
 
 CREATE TABLE _User (
    Id int NOT NULL,
-   Name varchar(30) NOT NULL UNIQUE, 
+   Name nvarchar(30) NOT NULL UNIQUE, 
    /* No password yet */
    CONSTRAINT PK__User PRIMARY KEY(Id)
 ); 
