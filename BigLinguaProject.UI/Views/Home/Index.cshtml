@@ -1,0 +1,13 @@
+﻿<h2>Анша Абдуль</h2>
+
+<p>Регистрация</p>
+
+@using(Html.BeginForm("index", "home")) {
+    @Html.Label("Имя/логин:"); 
+    @Html.TextBox("name");
+    <br />
+    @Html.Label("Пароль:");
+    @Html.Password("password"); 
+    <br />
+    <input type="submit" name="register" id="register" value="Зарегистрировать" />
+}
