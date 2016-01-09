@@ -20,19 +20,21 @@ USE LinguaNotebookDB;
 
 GO
 
-CREATE TABLE _User (
-   Id int NOT NULL,
-   Name nvarchar(30) NOT NULL UNIQUE, 
-   /* No password yet */
-   CONSTRAINT PK__User PRIMARY KEY(Id)
-); 
-
 CREATE TABLE Language (
    Id tinyint NOT NULL,
    Name nvarchar(25) NOT NULL UNIQUE,
    EnglishName nvarchar(25) NOT NULL UNIQUE,
    CONSTRAINT PK_Language PRIMARY KEY(Id)
 );
+
+CREATE TABLE _User (
+   Id int NOT NULL,
+   Name nvarchar(30) NOT NULL UNIQUE, 
+   Password char(40) NOT NULL,
+   NativeLangId tinyint NOT NULL,
+   CONSTRAINT PK__User PRIMARY KEY(Id),
+   CONSTRAINT FK__User_Language FOREIGN KEY(NativeLangId) REFERENCES Language(Id)
+); 
 
 CREATE TABLE Notebook (
    Id int NOT NULL,
