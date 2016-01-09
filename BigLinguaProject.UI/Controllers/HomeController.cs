@@ -9,6 +9,7 @@ namespace BigLinguaProject.UI.Controllers {
         }
         [HttpPost]
         public ActionResult Index(User user) {
+            user.Password = SHA1Util.SHA1HashStringForUTF8String(user.Password);
             return RedirectToAction("registered", user);
         }
         public ActionResult Registered(User user) {
