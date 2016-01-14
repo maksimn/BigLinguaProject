@@ -31,9 +31,7 @@ CREATE TABLE _User (
    Id int NOT NULL,
    Name nvarchar(30) NOT NULL UNIQUE, 
    Password char(40) NOT NULL,
-   NativeLangId tinyint NOT NULL,
-   CONSTRAINT PK__User PRIMARY KEY(Id),
-   CONSTRAINT FK__User_Language FOREIGN KEY(NativeLangId) REFERENCES Language(Id)
+   CONSTRAINT PK__User PRIMARY KEY(Id)
 ); 
 
 CREATE TABLE Notebook (
