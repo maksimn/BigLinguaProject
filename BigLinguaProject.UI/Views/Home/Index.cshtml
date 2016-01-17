@@ -1,13 +1,3 @@
-﻿<h2>Анша Абдуль</h2>
+﻿<h1>Lingua Start Page</h1>
 
-<p>Регистрация</p>
-
-@using(Html.BeginForm("index", "home")) {
-    @Html.Label("Имя/логин:"); 
-    @Html.TextBox("name");
-    <br />
-    @Html.Label("Пароль:");
-    @Html.Password("password"); 
-    <br />
-    <input type="submit" name="register" id="register" value="Зарегистрировать" />
-}
+@Html.ActionLink("Sign In", "signin") @Html.ActionLink("Register", "register")
