@@ -5,11 +5,5 @@ namespace BigLinguaProject.UI.Controllers {
         public ActionResult Index() {
             return View();
         }
-        public ActionResult SignIn() {
-            return View();
-        }
-        public ActionResult Register() {
-            return View();
-        }
     }
 }
