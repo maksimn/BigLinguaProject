@@ -1,1 +1,25 @@
-﻿<h2>Registration</h2>
+﻿@{    
+    ViewBag.Title = "Registration";
+}
+@model BigLinguaProject.UI.ViewModels.UserViewModel
+
+<h2>Registration</h2>
+
+@using(Html.BeginForm()) {
+    <p>
+        <label for="name">Name: </label>
+        @Html.TextBox("name", Model.Name , new { required = ""})
+    </p>
+    <p>
+        <label for="password">Password: </label>
+        @Html.Password("password", Model.Password , new { required = ""})
+    </p>
+    <p>
+        <label for="password2">Repeat<br /> password: </label>
+        @Html.Password("password2", Model.Password2, new { required = ""})
+    </p>
+    <p>
+        <input type="submit" value="Register" />
+    </p>
+    <p>@Html.ValidationSummary()</p>
+}
