@@ -23,6 +23,10 @@ namespace BigLinguaProject.UI.Controllers {
 
             // 1a. Есть -- выводим представление регистрации снова с данным сообщением
             // 1b. Нет -- добавляем соответствующую запись в БД и сообщаем об успехе
+            AppUser user = new AppUser() {
+                UserName = userViewModel.Name
+            };
+            var result = userManager.Create(user, userViewModel.Password);
 
             // Для реализации данной схемы следует применить ASP.NET Identity API
 
