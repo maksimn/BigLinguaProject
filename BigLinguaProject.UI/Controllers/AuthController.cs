@@ -3,6 +3,7 @@ using BigLinguaProject.UI.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using System;
 using System.Web;
 using System.Web.Mvc;
 
@@ -23,14 +24,22 @@ namespace BigLinguaProject.UI.Controllers {
 
             // 1a. Есть -- выводим представление регистрации снова с данным сообщением
             // 1b. Нет -- добавляем соответствующую запись в БД и сообщаем об успехе
-            AppUser user = new AppUser() {
-                UserName = userViewModel.Name
-            };
+            AppUser user = new AppUser() { UserName = userViewModel.Name };
             var result = userManager.Create(user, userViewModel.Password);
-
+            if (result.Succeeded) {
+                SignIn(user, isPersistent: false);
+                ViewBag.UserName = user.UserName;
+                return RedirectToAction("index", "home");
+            }
             // Для реализации данной схемы следует применить ASP.NET Identity API
 
             return View("success");
+        }
+        private void SignIn(AppUser user, Boolean isPersistent) {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+            var identity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+            AuthenticationManager.SignIn(new AuthenticationProperties() { 
+                IsPersistent = isPersistent }, identity);
         }
         public ActionResult SignIn() {
             return View();
