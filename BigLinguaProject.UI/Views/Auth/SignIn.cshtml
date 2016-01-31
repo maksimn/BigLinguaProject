@@ -1,1 +1,21 @@
-﻿<h2>Sign In</h2>
+﻿@{
+    ViewBag.Title = "Sign In";
+}
+@model BigLinguaProject.UI.ViewModels.UserViewModel
+
+<h2>Sign In</h2>
+
+@using (Html.BeginForm()) {
+    <p>
+        <label for="name">Name: </label>
+        @Html.TextBox("name", Model.Name, new { required = "" })
+    </p>
+    <p>
+        <label for="password">Password: </label>
+        @Html.Password("password", Model.Password, new { required = "" })
+    </p>
+    <p>
+        <input type="submit" value="Sign in" />
+    </p>
+    <p>@Html.ValidationSummary()</p>
+}

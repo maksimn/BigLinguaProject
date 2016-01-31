@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
+using System.Web.Security;
 using BigLinguaProject.UI.Models;
 using BigLinguaProject.UI.ViewModels;
 
@@ -30,18 +32,16 @@ namespace BigLinguaProject.UI.Controllers {
             dbContext.Users.Add(user);
             dbContext.SaveChanges();
             // Теперь нужно авторизовать данного пользователя
-            AuthorizeUser(user);
-
+            FormsAuthentication.SetAuthCookie(user.Name, false);
+            
+            // Результат действия:
             return View("success");
         }
-        public ActionResult SignIn() {
+        public ActionResult SignIn(SignInViewModel viewModel, String returnUrl) {
             return View();
         }
         public ActionResult SignOut() {
             return null;
-        }
-        private void AuthorizeUser(User user) {
-            this.HttpContext.Session["UserName"] = user.Name;
         }
     }
 }
