@@ -11,10 +11,10 @@ namespace BigLinguaProject.UI.Controllers {
 
         [HttpGet]
         public ActionResult Register() {
-            return View(new UserViewModel());
+            return View(new RegisterViewModel());
         }
         [HttpPost]
-        public ActionResult Register(UserViewModel userViewModel) {
+        public ActionResult Register(RegisterViewModel userViewModel) {
             if (!ModelState.IsValid) {
                 return View(userViewModel);
             }
@@ -37,11 +37,52 @@ namespace BigLinguaProject.UI.Controllers {
             // Результат действия:
             return View("success");
         }
-        public ActionResult SignIn(SignInViewModel viewModel, String returnUrl) {
-            return View();
+        public ActionResult SignIn() {
+            return View(new SignInViewModel());
         }
-        public ActionResult SignOut() {
-            return null;
+        [HttpPost]
+        public ActionResult SignIn(SignInViewModel viewModel, String returnUrl,
+            String defaultAction="index", String defaultController="home") {
+            Boolean isValidReturnUrl = IsValidReturnUrl(returnUrl);
+
+            if (!ModelState.IsValid) {
+                ModelState.AddModelError("", "The user name or password provided is incorrect.");
+                return View(viewModel);
+            }
+
+            // Validate and proceed
+            User user = ValidateUser(viewModel.Name, SHA1Util.SHA1HashStringForUTF8String(viewModel.Password));
+            if (user.Name != null) {
+                FormsAuthentication.SetAuthCookie(viewModel.Name, false);
+                if (isValidReturnUrl) {
+                    return Redirect(returnUrl);
+                }
+                return RedirectToAction(defaultAction, defaultController, new { id = user.Id });
+            }
+
+            // If we got this far, something failed, redisplay form
+            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            return View(viewModel);
+        }
+
+        public ActionResult SignOut(String defaultAction = "Index", String defaultController = "Home") {
+            FormsAuthentication.SignOut();
+            return RedirectToAction(defaultAction, defaultController);
+        }
+
+        private Boolean IsValidReturnUrl(String returnUrl) {
+            return Url.IsLocalUrl(returnUrl) &&
+                returnUrl.Length > 1 &&
+                returnUrl.StartsWith("/") &&
+                !returnUrl.StartsWith("//") &&
+                !returnUrl.StartsWith("/\\");
+        }
+        
+        private User ValidateUser(String name, String passwordHash) {
+            User user = dbContext.Users.SingleOrDefault(u =>
+                String.Equals(u.Name, name) &&
+                String.Equals(u.PasswordHash, passwordHash));
+            return user;
         }
     }
 }
