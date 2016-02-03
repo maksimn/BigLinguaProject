@@ -53,11 +53,11 @@ namespace BigLinguaProject.UI.Controllers {
             // Validate and proceed
             User user = ValidateUser(viewModel.Name, SHA1Util.SHA1HashStringForUTF8String(viewModel.Password));
             if (user.Name != null) {
-                FormsAuthentication.SetAuthCookie(viewModel.Name, false);
+                FormsAuthentication.SetAuthCookie(user.Name, false);
                 if (isValidReturnUrl) {
                     return Redirect(returnUrl);
                 }
-                return RedirectToAction(defaultAction, defaultController, new { id = user.Id });
+                return RedirectToAction(defaultAction, defaultController, new { id = user.Name });
             }
 
             // If we got this far, something failed, redisplay form
@@ -80,8 +80,7 @@ namespace BigLinguaProject.UI.Controllers {
         
         private User ValidateUser(String name, String passwordHash) {
             User user = dbContext.Users.SingleOrDefault(u =>
-                String.Equals(u.Name, name) &&
-                String.Equals(u.PasswordHash, passwordHash));
+                String.Equals(u.Name, name) && String.Equals(u.PasswordHash, passwordHash));
             return user;
         }
     }

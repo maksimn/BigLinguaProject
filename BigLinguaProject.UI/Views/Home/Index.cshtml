@@ -1,5 +1,13 @@
 ﻿<h1>Lingua Start Page</h1>
 
-@Html.ActionLink("Sign In", "signin", "auth") @Html.ActionLink("Register", "register", "auth")
+@{
+    var userName = ViewContext.RouteData.Values["id"];
+}
 
-<p>@ViewBag.UserName</p>
+<div>
+    @if (userName != null) {
+        <div>@userName</div> <div>@Html.ActionLink("Sign Out", "signout", "auth")</div>
+    } else {
+        <div>@Html.ActionLink("Sign In", "signin", "auth")</div> <div>@Html.ActionLink("Register", "register", "auth")</div>
+    }
+</div>
