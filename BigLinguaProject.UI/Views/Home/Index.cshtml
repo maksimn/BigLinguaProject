@@ -6,8 +6,10 @@
 
 <div>
     @if (userName != null) {
-        <div>@userName</div> <div>@Html.ActionLink("Sign Out", "signout", "auth")</div>
+        <div style="display:inline-block;">@userName</div>        
+        <div style="display:inline-block;">@Html.ActionLink("Sign Out", "signout", "auth")</div>
     } else {
-        <div>@Html.ActionLink("Sign In", "signin", "auth")</div> <div>@Html.ActionLink("Register", "register", "auth")</div>
+        <div style="display:inline-block;">@Html.ActionLink("Sign In", "signin", "auth")</div>
+        <div style="display:inline-block;">@Html.ActionLink("Register", "register", "auth")</div>
     }
 </div>
