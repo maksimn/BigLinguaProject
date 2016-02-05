@@ -1,59 +1,49 @@
 ﻿using System;
-using System.Linq;
 using System.Web.Mvc;
-using System.Web.Security;
-using BigLinguaProject.UI.Models;
+
 using BigLinguaProject.UI.Services;
 using BigLinguaProject.UI.ViewModels;
 
 namespace BigLinguaProject.UI.Controllers {
     public class AuthController : Controller {
-        private BigLinguaDbContext dbContext = new BigLinguaDbContext();
         private AuthService authService = new AuthService();
 
-        [HttpGet]
         public ActionResult Register() {
             return View(new RegisterViewModel());
         }
+
         [HttpPost]
         public ActionResult Register(RegisterViewModel userViewModel) {
             if (!authService.IsRegisterActionViewModelValid(userViewModel, ModelState)) {
                 return View(userViewModel);
             }
-            String resultModel = authService.GetRegisterActionViewModel(userViewModel);            
-            // Результат действия:
+            var resultModel = authService.GetRegisterActionViewModel(userViewModel); 
             return View("success", resultModel);
         }
+
         public ActionResult SignIn() {
             return View(new SignInViewModel());
         }
+
         [HttpPost]
         public ActionResult SignIn(SignInViewModel viewModel, String returnUrl,
             String defaultAction="index", String defaultController="home") {
             Boolean isValidReturnUrl = IsValidReturnUrl(returnUrl);
 
-            if (!ModelState.IsValid) {
-                ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            if (!authService.IsSignInViewModelValid(viewModel, ModelState)) {
                 return View(viewModel);
             }
 
-            // Validate and proceed
-            User user = ValidateUser(viewModel.Name, SHA1Util.SHA1HashStringForUTF8String(viewModel.Password));
-            if (user.Name != null) {
-                FormsAuthentication.SetAuthCookie(user.Name, false);
-                if (isValidReturnUrl) {
-                    return Redirect(returnUrl);
-                }
-                return RedirectToAction(defaultAction, defaultController, new { id = user.Name });
-            }
+            authService.SignIn(viewModel.Name);
 
-            // If we got this far, something failed, redisplay form
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
-            return View(viewModel);
+            if (isValidReturnUrl) {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction(defaultAction, defaultController, new { id = viewModel.Name });
         }
 
         public ActionResult SignOut(String defaultAction = "Index", String defaultController = "Home") {
-            FormsAuthentication.SignOut();
+            authService.SignOut();
             return RedirectToAction(defaultAction, defaultController);
         }
 
@@ -63,12 +53,6 @@ namespace BigLinguaProject.UI.Controllers {
                 returnUrl.StartsWith("/") &&
                 !returnUrl.StartsWith("//") &&
                 !returnUrl.StartsWith("/\\");
-        }
-        
-        private User ValidateUser(String name, String passwordHash) {
-            User user = dbContext.Users.SingleOrDefault(u =>
-                String.Equals(u.Name, name) && String.Equals(u.PasswordHash, passwordHash));
-            return user;
         }
     }
 }

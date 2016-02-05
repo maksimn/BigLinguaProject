@@ -23,7 +23,7 @@ namespace BigLinguaProject.UI.Services {
             return true;
         }
 
-        public String GetRegisterActionViewModel(RegisterViewModel viewModel) {
+        public SuccessViewModel GetRegisterActionViewModel(RegisterViewModel viewModel) {
             // добавить в базу и авторизовать в системе
             User user = new User {
                 Name = viewModel.Name,
@@ -33,7 +33,29 @@ namespace BigLinguaProject.UI.Services {
             dbContext.SaveChanges();
             // Теперь нужно авторизовать данного пользователя
             FormsAuthentication.SetAuthCookie(user.Name, false);
-            return user.Name;
+            return new SuccessViewModel { UserName = user.Name };
+        }
+
+        public void SignIn(String userName) {
+            FormsAuthentication.SetAuthCookie(userName, false);
+        }
+
+        public void SignOut() {
+            FormsAuthentication.SignOut();
+        }
+
+        public Boolean IsSignInViewModelValid(SignInViewModel viewModel, ModelStateDictionary modelState) {
+            if (!modelState.IsValid || 
+                !DoesUserExistInDb(viewModel.Name, SHA1Util.SHA1HashStringForUTF8String(viewModel.Password))) {
+                modelState.AddModelError("", "The user name or password provided is incorrect.");
+                return false;
+            }
+            return true;
+        }
+
+        private Boolean DoesUserExistInDb(String name, String passwordHash) {
+            return dbContext.Users.Any(u =>
+                String.Equals(u.Name, name) && String.Equals(u.PasswordHash, passwordHash));
         }
     }
 }
