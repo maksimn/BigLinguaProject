@@ -18,7 +18,7 @@ namespace BigLinguaProject.UI.Controllers {
                 return View(userViewModel);
             }
             var resultModel = authService.GetRegisterActionViewModel(userViewModel); 
-            return View("success", resultModel);
+            return View("success", null, resultModel);
         }
 
         public ActionResult SignIn() {

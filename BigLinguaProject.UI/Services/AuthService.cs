@@ -23,7 +23,7 @@ namespace BigLinguaProject.UI.Services {
             return true;
         }
 
-        public SuccessViewModel GetRegisterActionViewModel(RegisterViewModel viewModel) {
+        public String GetRegisterActionViewModel(RegisterViewModel viewModel) {
             // добавить в базу и авторизовать в системе
             User user = new User {
                 Name = viewModel.Name,
@@ -33,7 +33,7 @@ namespace BigLinguaProject.UI.Services {
             dbContext.SaveChanges();
             // Теперь нужно авторизовать данного пользователя
             FormsAuthentication.SetAuthCookie(user.Name, false);
-            return new SuccessViewModel { UserName = user.Name };
+            return user.Name;
         }
 
         public void SignIn(String userName) {

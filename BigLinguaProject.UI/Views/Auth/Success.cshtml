@@ -1,5 +1,5 @@
-﻿@model BigLinguaProject.UI.ViewModels.SuccessViewModel
+﻿@model System.String
 
-<p>@Model.UserName, you have been successfully registered!</p>
+<p>@Model, you have been successfully registered!</p>
 
-@Html.ActionLink("To Start Page", "index", "home", new { id = Model.UserName }, null)
+@Html.ActionLink("To Start Page", "index", "home", new { id = Model }, null)
