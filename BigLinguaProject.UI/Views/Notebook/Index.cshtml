@@ -1,1 +1,8 @@
-﻿<h2>Notebooks</h2>
+﻿@model BigLinguaProject.UI.ViewModels.NotebookIndexViewModel
+
+<h2>Notebooks</h2>
+
+<div>
+    <span>@Model.UserName </span>
+    <span>@Html.ActionLink("Sign Out", "signout", "auth")</span>
+</div>

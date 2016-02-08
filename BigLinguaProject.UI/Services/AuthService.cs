@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
@@ -32,7 +33,7 @@ namespace BigLinguaProject.UI.Services {
             dbContext.Users.Add(user);
             dbContext.SaveChanges();
             // Теперь нужно авторизовать данного пользователя
-            FormsAuthentication.SetAuthCookie(user.Name, false);
+            SignIn(user.Name);
             return user.Name;
         }
 

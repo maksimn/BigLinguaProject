@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 
+using BigLinguaProject.UI.Attributes;
 using BigLinguaProject.UI.Services;
 using BigLinguaProject.UI.ViewModels;
 
@@ -8,6 +9,7 @@ namespace BigLinguaProject.UI.Controllers {
     public class AuthController : Controller {
         private AuthService authService = new AuthService();
 
+        [UnauthorizedUsersOnly]
         public ActionResult Register() {
             return View(new RegisterViewModel());
         }
@@ -17,10 +19,12 @@ namespace BigLinguaProject.UI.Controllers {
             if (!authService.IsRegisterActionViewModelValid(userViewModel, ModelState)) {
                 return View(userViewModel);
             }
-            var resultModel = authService.GetRegisterActionViewModel(userViewModel); 
+            var resultModel = authService.GetRegisterActionViewModel(userViewModel);
+            CreateSession(userViewModel.Name);
             return View("success", null, resultModel);
         }
 
+        [UnauthorizedUsersOnly]
         public ActionResult SignIn() {
             return View(new SignInViewModel());
         }
@@ -35,6 +39,7 @@ namespace BigLinguaProject.UI.Controllers {
             }
 
             authService.SignIn(viewModel.Name);
+            CreateSession(viewModel.Name);
 
             if (isValidReturnUrl) {
                 return Redirect(returnUrl);
@@ -44,7 +49,16 @@ namespace BigLinguaProject.UI.Controllers {
 
         public ActionResult SignOut(String defaultAction = "Index", String defaultController = "Home") {
             authService.SignOut();
+            RemoveSession();
             return RedirectToAction(defaultAction, defaultController);
+        }
+
+        private void CreateSession(String username) {
+            Session.Add("username", username);
+        }
+
+        private void RemoveSession() {
+            Session.RemoveAll();
         }
 
         private Boolean IsValidReturnUrl(String returnUrl) {

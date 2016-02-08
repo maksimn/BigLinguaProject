@@ -11,8 +11,8 @@ namespace BigLinguaProject.UI {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "forAuthenticatedUsers",
-                url: "{id}",
+                name: "forAuthorizedUsers",
+                url: "{username}",
                 defaults: new { controller="notebook", action="index" }
             );
 
