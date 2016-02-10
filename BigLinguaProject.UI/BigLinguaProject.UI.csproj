@@ -117,7 +117,6 @@
     <Compile Include="Attributes\AuthorizedUsersOnly.cs" />
     <Compile Include="Attributes\UnauthorizedUsersOnly.cs" />
     <Compile Include="Controllers\AuthController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NotebookController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -156,7 +155,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Auth\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Auth\SignIn.cshtml" />

@@ -10,11 +10,17 @@ namespace BigLinguaProject.UI.Controllers {
         private AuthService authService = new AuthService();
 
         [UnauthorizedUsersOnly]
+        public ActionResult Index() {
+            return View();
+        }
+
+        [UnauthorizedUsersOnly]
         public ActionResult Register() {
             return View(new RegisterViewModel());
         }
 
         [HttpPost]
+        [UnauthorizedUsersOnly]
         public ActionResult Register(RegisterViewModel userViewModel) {
             if (!authService.IsRegisterActionViewModelValid(userViewModel, ModelState)) {
                 return View(userViewModel);
@@ -30,6 +36,7 @@ namespace BigLinguaProject.UI.Controllers {
         }
 
         [HttpPost]
+        [UnauthorizedUsersOnly]
         public ActionResult SignIn(SignInViewModel viewModel, String returnUrl,
             String defaultAction="index", String defaultController="home") {
             Boolean isValidReturnUrl = IsValidReturnUrl(returnUrl);
@@ -47,7 +54,7 @@ namespace BigLinguaProject.UI.Controllers {
             return RedirectToAction(defaultAction, defaultController, new { id = viewModel.Name });
         }
 
-        public ActionResult SignOut(String defaultAction = "Index", String defaultController = "Home") {
+        public ActionResult SignOut(String defaultAction = "Index", String defaultController = "Auth") {
             authService.SignOut();
             RemoveSession();
             return RedirectToAction(defaultAction, defaultController);

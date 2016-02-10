@@ -17,9 +17,9 @@ namespace BigLinguaProject.UI {
             );
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                name: "General",
+                url: "{controller}/{action}",
+                defaults: new { controller = "Auth", action = "Index" }
             );
         }
     }
