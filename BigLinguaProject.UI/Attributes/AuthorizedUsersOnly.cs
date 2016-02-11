@@ -13,9 +13,10 @@ namespace BigLinguaProject.UI.Attributes {
             }                
 
             String sessionUserName = (String)filterContext.HttpContext.Session["username"];
+            String routeUserName = (String)filterContext.RouteData.Values["username"];
             if (sessionUserName == null) {
                 filterContext.Result = new HttpUnauthorizedResult();
-            } else if (sessionUserName != (filterContext.RouteData.Values["username"] as String)) {
+            } else if (routeUserName != null && sessionUserName != routeUserName) {
                 filterContext.Result = new RedirectToRouteResult(
                     new RouteValueDictionary(new { username = sessionUserName })
                 );
