@@ -7,6 +7,9 @@ using BigLinguaProject.UI.ViewModels;
 
 namespace BigLinguaProject.UI.Controllers {
     public class NotebookController : Controller {
+        public NotebookController() : base() {
+        }
+
         [AuthorizedUsersOnly]
         public ActionResult Index() {
             var viewModel = new NotebookIndexViewModel { 

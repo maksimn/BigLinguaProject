@@ -7,7 +7,11 @@ using BigLinguaProject.UI.ViewModels;
 
 namespace BigLinguaProject.UI.Controllers {
     public class AuthController : Controller {
-        private AuthService authService = new AuthService();
+        private AuthService authService;
+
+        public AuthController() : base() {
+            authService = new AuthService();
+        }
 
         [UnauthorizedUsersOnly]
         public ActionResult Index() {
@@ -35,8 +39,7 @@ namespace BigLinguaProject.UI.Controllers {
         }
 
         [HttpPost]
-        public ActionResult SignIn(SignInViewModel viewModel, String returnUrl,
-            String defaultAction="index", String defaultController="notebook") {
+        public ActionResult SignIn(SignInViewModel viewModel, String returnUrl) {
             Boolean isValidReturnUrl = IsValidReturnUrl(returnUrl);
 
             if (!authService.IsSignInViewModelValid(viewModel, ModelState)) {
@@ -49,11 +52,15 @@ namespace BigLinguaProject.UI.Controllers {
             if (isValidReturnUrl) {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction(defaultAction, defaultController);
+            return RedirectToAction("index", "notebook");
         }
 
-        //[AuthorizedUsersOnly]
         public ActionResult SignOut(String defaultAction = "Index", String defaultController = "Auth") {
+            Boolean authorized = Session["username"] != null;
+            if (!authorized) {
+                return RedirectToAction(defaultAction, defaultController);
+            }
+
             authService.SignOut();
             RemoveSession();
             return RedirectToAction(defaultAction, defaultController);
@@ -64,8 +71,8 @@ namespace BigLinguaProject.UI.Controllers {
         }
 
         private void RemoveSession() {
+            Session.Remove("username");
             Session.Abandon();
-            //Session.RemoveAll();
         }
 
         private Boolean IsValidReturnUrl(String returnUrl) {
