@@ -16,8 +16,8 @@ namespace BigLinguaProject.UI.Attributes {
             String sessionUserName = (String)filterContext.HttpContext.Session["username"];
             Boolean isAuthorized = sessionUserName != null;
             if (isAuthorized) {
-                filterContext.Result = new RedirectToRouteResult(
-                    new RouteValueDictionary(new { username = sessionUserName })
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(
+                    new { controller = "notebook", action = "index" })
                 );
             }
         }

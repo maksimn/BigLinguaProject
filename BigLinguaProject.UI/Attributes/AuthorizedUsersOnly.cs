@@ -16,16 +16,11 @@ namespace BigLinguaProject.UI.Attributes {
             }
 
             String sessionUserName = (String)filterContext.HttpContext.Session["username"];
-            String routeUserName = (String)filterContext.RouteData.Values["username"];
             Boolean isAuthorized = sessionUserName != null;
-            Boolean authorizedAndSessionAndRouteUserNamesTheSame = 
-                isAuthorized && sessionUserName == routeUserName;
             
             if(!isAuthorized) {
                 filterContext.Result = new HttpUnauthorizedResult();
-            } else if (!authorizedAndSessionAndRouteUserNamesTheSame) {
-                filterContext.Result = new RedirectResult(String.Format("{0}/notebook/index", sessionUserName));
-            } 
+            }
         }
     }
 }

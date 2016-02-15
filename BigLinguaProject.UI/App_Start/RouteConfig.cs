@@ -15,11 +15,6 @@ namespace BigLinguaProject.UI {
                 url: "{controller}/{action}",
                 defaults: new { controller = "Auth", action = "Index" }
             );
-            routes.MapRoute(
-                name: "forAuthorizedUsers",
-                url: "{username}/notebook/index",
-                defaults: new { controller = "notebook", action = "index" }
-            );
         }
     }
 }
