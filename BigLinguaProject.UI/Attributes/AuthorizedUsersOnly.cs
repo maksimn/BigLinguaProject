@@ -21,11 +21,11 @@ namespace BigLinguaProject.UI.Attributes {
             Boolean authorizedAndSessionAndRouteUserNamesTheSame = 
                 isAuthorized && sessionUserName == routeUserName;
             
-            if (!authorizedAndSessionAndRouteUserNamesTheSame) {
-                filterContext.Result = new RedirectResult(String.Format("{0}/notebook/index", sessionUserName));
-            } else if(!isAuthorized) {
+            if(!isAuthorized) {
                 filterContext.Result = new HttpUnauthorizedResult();
-            }
+            } else if (!authorizedAndSessionAndRouteUserNamesTheSame) {
+                filterContext.Result = new RedirectResult(String.Format("{0}/notebook/index", sessionUserName));
+            } 
         }
     }
 }
