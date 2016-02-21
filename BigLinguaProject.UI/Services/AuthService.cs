@@ -8,10 +8,10 @@ using BigLinguaProject.UI.Models;
 using BigLinguaProject.UI.ViewModels;
 
 namespace BigLinguaProject.UI.Services {
-    public class AuthService {
+    public class AuthService : IAuthService {
         private BigLinguaDbContext dbContext = new BigLinguaDbContext();
 
-        public Boolean IsRegisterActionViewModelValid(RegisterViewModel viewModel, 
+        private Boolean IsRegisterActionViewModelValid(RegisterViewModel viewModel, 
                                                       ModelStateDictionary modelState) {
             if(!modelState.IsValid) {
                 return false;
@@ -24,7 +24,7 @@ namespace BigLinguaProject.UI.Services {
             return true;
         }
 
-        public String GetRegisterActionViewModel(RegisterViewModel viewModel) {
+        private String GetRegisterActionViewModel(RegisterViewModel viewModel) {
             // добавить в базу и авторизовать в системе
             User user = new User {
                 Name = viewModel.Name,
@@ -37,15 +37,11 @@ namespace BigLinguaProject.UI.Services {
             return user.Name;
         }
 
-        public void SignIn(String userName) {
+        private void SignIn(String userName) {
             FormsAuthentication.SetAuthCookie(userName, false);
         }
 
-        public void SignOut() {
-            FormsAuthentication.SignOut();
-        }
-
-        public Boolean IsSignInViewModelValid(SignInViewModel viewModel, ModelStateDictionary modelState) {
+        private Boolean IsSignInViewModelValid(SignInViewModel viewModel, ModelStateDictionary modelState) {
             if (!modelState.IsValid || 
                 !DoesUserExistInDb(viewModel.Name, SHA1Util.SHA1HashStringForUTF8String(viewModel.Password))) {
                 modelState.AddModelError("", "The user name or password provided is incorrect.");
@@ -57,6 +53,36 @@ namespace BigLinguaProject.UI.Services {
         private Boolean DoesUserExistInDb(String name, String passwordHash) {
             return dbContext.Users.Any(u =>
                 String.Equals(u.Name, name) && String.Equals(u.PasswordHash, passwordHash));
+        }
+
+        public Boolean IsViewModelValid<T>(T viewModel, ModelStateDictionary modelState) {
+            if (viewModel is RegisterViewModel) {
+                return IsRegisterActionViewModelValid(viewModel as RegisterViewModel, modelState);
+            } else if (viewModel is SignInViewModel) {
+                return IsSignInViewModelValid(viewModel as SignInViewModel, modelState);
+            } else {
+                throw new NotImplementedException();
+            }            
+        }
+
+        public Object GetActionModelResult<T1>(T1 viewModel) {
+            if (viewModel is RegisterViewModel) {
+                return GetRegisterActionViewModel(viewModel as RegisterViewModel);
+            } else {
+                throw new NotImplementedException();
+            }  
+        }
+
+        public void SignIn<T2>(T2 data) {
+            if (data is String) {
+                SignIn(data as String);
+            } else {
+                throw new NotImplementedException();
+            }
+        }
+
+        public void SignOut() {
+            FormsAuthentication.SignOut();
         }
     }
 }

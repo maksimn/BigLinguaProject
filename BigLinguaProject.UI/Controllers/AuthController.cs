@@ -7,7 +7,7 @@ using BigLinguaProject.UI.ViewModels;
 
 namespace BigLinguaProject.UI.Controllers {
     public class AuthController : Controller {
-        private AuthService authService;
+        private IAuthService authService;
 
         public AuthController() : base() {
             authService = new AuthService();
@@ -25,10 +25,10 @@ namespace BigLinguaProject.UI.Controllers {
 
         [HttpPost]
         public ActionResult Register(RegisterViewModel userViewModel) {
-            if (!authService.IsRegisterActionViewModelValid(userViewModel, ModelState)) {
+            if (!authService.IsViewModelValid<RegisterViewModel>(userViewModel, ModelState)) {
                 return View(userViewModel);
             }
-            var resultModel = authService.GetRegisterActionViewModel(userViewModel);
+            String resultModel = authService.GetActionModelResult<RegisterViewModel>(userViewModel) as String;
             CreateSession(userViewModel.Name);
             return View("success", null, resultModel);
         }
@@ -42,7 +42,7 @@ namespace BigLinguaProject.UI.Controllers {
         public ActionResult SignIn(SignInViewModel viewModel, String returnUrl) {
             Boolean isValidReturnUrl = IsValidReturnUrl(returnUrl);
 
-            if (!authService.IsSignInViewModelValid(viewModel, ModelState)) {
+            if (!authService.IsViewModelValid<SignInViewModel>(viewModel, ModelState)) {
                 return View(viewModel);
             }
 
