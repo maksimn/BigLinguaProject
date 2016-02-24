@@ -4,3 +4,8 @@
       система возвращается на начальную страницу. Но при этом возможно
       нажать кнопку "Назад" в браузере и вернуться на предыдующую 
       страницу. [fixed]
+
+#0002 The model backing the 'BigLinguaDbContext' context has changed 
+      since the database was created. Consider using Code First 
+      Migrations to update the database 
+      (http://go.microsoft.com/fwlink/?LinkId=238269).

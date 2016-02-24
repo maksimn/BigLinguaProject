@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 
 using BigLinguaProject.UI.Models;
+using BigLinguaProject.UI.Models.Entities;
 using BigLinguaProject.UI.ViewModels;
 
 namespace BigLinguaProject.UI.Services {
@@ -83,6 +84,10 @@ namespace BigLinguaProject.UI.Services {
 
         public void SignOut() {
             FormsAuthentication.SignOut();
+        }
+
+        public void Dispose() {
+            dbContext.Dispose();
         }
     }
 }

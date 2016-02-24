@@ -9,7 +9,7 @@ namespace BigLinguaProject.UI.Controllers {
     public class AuthController : Controller {
         private IAuthService authService;
 
-        public AuthController() : base() {
+        public AuthController() {
             authService = new AuthService();
         }
 
@@ -81,6 +81,13 @@ namespace BigLinguaProject.UI.Controllers {
                 returnUrl.StartsWith("/") &&
                 !returnUrl.StartsWith("//") &&
                 !returnUrl.StartsWith("/\\");
+        }
+
+        protected override void Dispose(Boolean disposing) {
+            if (disposing) {
+                authService.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
