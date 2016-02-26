@@ -16,7 +16,7 @@ namespace BigLinguaProject.UI.Controllers {
                 UserName = Session["username"] as String
             };
 
-            service.CreateLanguageTableAndAddLanguages();
+            service.CreateAndAddLanguagesToDb();
 
             return View(viewModel);
         }

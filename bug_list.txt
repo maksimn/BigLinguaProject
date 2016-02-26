@@ -9,3 +9,12 @@
       since the database was created. Consider using Code First 
       Migrations to update the database 
       (http://go.microsoft.com/fwlink/?LinkId=238269).
+
+      =========
+Checking if the context targets an existing database...
+Detected database created with a database initializer. Scaffolded migration '201601300816364_InitialCreate' corresponding to existing database. To use an automatic migration instead, delete the Migrations folder and re-run Enable-Migrations specifying the -EnableAutomaticMigrations parameter.
+Code First Migrations enabled for project BigLinguaProject.UI.
+
+#0003 Server Error in '/' Application.
+      Cannot insert explicit value for identity column in table 
+      'Languages' when IDENTITY_INSERT is set to OFF.
