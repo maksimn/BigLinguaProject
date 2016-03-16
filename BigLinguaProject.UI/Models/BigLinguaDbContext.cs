@@ -3,10 +3,9 @@
 using BigLinguaProject.UI.Models.Entities; 
 
 namespace BigLinguaProject.UI.Models {
-    public class BigLinguaDbContext : DbContext {
-        public BigLinguaDbContext() : base("DefaultConnection") {
+    public class BigLinguaDbContext1 : DbContext {
+        public BigLinguaDbContext1() : base("DefaultConnection") {
         }
         public DbSet<User> Users { get; set; }
-        public DbSet<Language> Languages { get; set; }
     }
 }

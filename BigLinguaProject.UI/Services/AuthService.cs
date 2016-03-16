@@ -10,7 +10,7 @@ using BigLinguaProject.UI.ViewModels;
 
 namespace BigLinguaProject.UI.Services {
     public class AuthService : IAuthService {
-        private BigLinguaDbContext dbContext = new BigLinguaDbContext();
+        private BigLinguaDbContext1 dbContext = new BigLinguaDbContext1();
 
         private Boolean IsRegisterActionViewModelValid(RegisterViewModel viewModel, 
                                                       ModelStateDictionary modelState) {

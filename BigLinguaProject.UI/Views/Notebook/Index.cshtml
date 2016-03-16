@@ -6,3 +6,18 @@
     <span>@Model.UserName </span>
     <span>@Html.ActionLink("Sign Out", "signout", "auth")</span>
 </div>
+<div>
+    @if (Model.Notebooks.Count == 0) {
+        <p style="color:grey;">
+            You do not have any notebooks now.
+        </p>
+    } else {
+        foreach (var notebook in Model.Notebooks) {
+            <div>
+                <div>Notebook</div>
+                <div>@notebook.TargetLanguage.EnglishName - @notebook.BaseLanguage.EnglishName</div>
+                <div>@notebook.TargetLanguage.Name - @notebook.BaseLanguage.Name</div>
+            </div>
+        }
+    }
+</div>

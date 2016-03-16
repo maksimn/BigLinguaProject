@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,11 +13,10 @@ namespace BigLinguaProject.UI.Controllers {
 
         [AuthorizedUsersOnly]
         public ActionResult Index() {
-            var viewModel = new NotebookIndexViewModel { 
-                UserName = Session["username"] as String
-            };
-
-            service.CreateAndAddLanguagesToDb();
+            var viewModel = new NotebookIndexViewModel (
+                Session["username"] as String, 
+                new List<NotebookDescription>()
+            );
 
             return View(viewModel);
         }
