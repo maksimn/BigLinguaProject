@@ -14,8 +14,8 @@ namespace BigLinguaProject.UI.Controllers {
         [AuthorizedUsersOnly]
         public ActionResult Index() {
             var viewModel = new NotebookIndexViewModel (
-                Session["username"] as String, 
-                new List<NotebookDescription>()
+                username: Session["username"] as String, 
+                notebooks: new List<NotebookDescription>()
             );
 
             return View(viewModel);

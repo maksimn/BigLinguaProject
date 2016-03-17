@@ -9,7 +9,7 @@
 <div>
     @if (Model.Notebooks.Count == 0) {
         <p style="color:grey;">
-            You do not have any notebooks now.
+            [You do not have any notebooks now.]
         </p>
     } else {
         foreach (var notebook in Model.Notebooks) {
@@ -20,4 +20,29 @@
             </div>
         }
     }
+    <div>
+        <input id="addNotebookBtn" type="button" value="Add a notebook" />
+        @using (Html.BeginForm()) {
+            <label><b>Add a notebook</b></label><br />
+        }
+       
+        <!--
+        <form method="post" action="">
+            <label><b>Add a notebook</b></label><br />
+            <label>Language 1 (for learning):</label>
+            <select>
+               <option>English</option>
+               <option>Русский / Russian</option>
+               <option>Deutsch / German</option>
+            </select><br />
+            <label>Language 2 (for explanations):</label>
+            <select>
+                <option>English</option>
+                <option>Русский / Russian</option>
+                <option>Deutsch / German</option>
+            </select><br />
+            <input type="submit" value="Add" />
+        </form>
+        -->
+    </div>
 </div>
