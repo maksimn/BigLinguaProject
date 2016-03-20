@@ -20,29 +20,18 @@
             </div>
         }
     }
-    <div>
+    <div id="addNotebookForm">
         <input id="addNotebookBtn" type="button" value="Add a notebook" />
         @using (Html.BeginForm()) {
-            <label><b>Add a notebook</b></label><br />
-        }
-       
-        <!--
-        <form method="post" action="">
-            <label><b>Add a notebook</b></label><br />
+            <label><b>Add a notebook</b></label>
+            <br />
             <label>Language 1 (for learning):</label>
-            <select>
-               <option>English</option>
-               <option>Русский / Russian</option>
-               <option>Deutsch / German</option>
-            </select><br />
+            @Html.DropDownList("language1", new SelectList(Model.LangList))
+            <br />
             <label>Language 2 (for explanations):</label>
-            <select>
-                <option>English</option>
-                <option>Русский / Russian</option>
-                <option>Deutsch / German</option>
-            </select><br />
+            @Html.DropDownList("language2", new SelectList(Model.LangList))
+            <br />
             <input type="submit" value="Add" />
-        </form>
-        -->
+        }
     </div>
 </div>
