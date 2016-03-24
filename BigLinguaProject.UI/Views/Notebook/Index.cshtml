@@ -21,8 +21,10 @@
         }
     }
     <div id="addNotebookForm">
-        <input id="addNotebookBtn" type="button" value="Add a notebook" />
-        @using (Html.BeginForm()) {
+        <input id="addNotebookBtn" type="button" value="Add a notebook" 
+               onclick="document.getElementsByTagName('form')[0].style.visibility = 'visible';
+                        document.getElementById('addNotebookBtn').style.visibility = 'hidden';" />
+        <form method="post" action="notebook/add" style="visibility:hidden;">
             <label><b>Add a notebook</b></label>
             <br />
             <label>Language 1 (for learning):</label>
@@ -32,6 +34,7 @@
             @Html.DropDownList("language2", new SelectList(Model.LangList))
             <br />
             <input type="submit" value="Add" />
-        }
+            <input type="hidden" name="username" value="@Model.UserName" />
+        </form>
     </div>
 </div>
