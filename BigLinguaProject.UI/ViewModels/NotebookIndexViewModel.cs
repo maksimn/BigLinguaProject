@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 namespace BigLinguaProject.UI.ViewModels {
     public class NotebookIndexViewModel {
-        public NotebookIndexViewModel() {}
+        public NotebookIndexViewModel() {
+        }
         public NotebookIndexViewModel(String username, 
                                       List<NotebookDescription> notebooks, 
                                       ILangListInitializer langInit = null) {
@@ -15,9 +16,9 @@ namespace BigLinguaProject.UI.ViewModels {
                 LangList = langInit.Initialize();
             }
         }
-        public String UserName { get; private set; }
-        public List<NotebookDescription> Notebooks { get; private set; }
-        public IEnumerable<LanguageDescription> LangList { get; private set; }
+        public String UserName { get; set; }
+        public List<NotebookDescription> Notebooks { get; set; }
+        public IEnumerable<LanguageDescription> LangList { get; set; }
     }
 
     public class NotebookDescription {
