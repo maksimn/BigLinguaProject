@@ -131,7 +131,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\IAuthService.cs" />
-    <Compile Include="Services\NotebookService.cs" />
+    <Compile Include="Services\Notebook\INotebookDataSource.cs" />
+    <Compile Include="Services\Notebook\NotebookService.cs" />
+    <Compile Include="Services\Notebook\TestNotebookDataSource.cs" />
     <Compile Include="ViewModels\NotebookIndexViewModel.cs" />
     <Compile Include="ViewModels\SignInViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />

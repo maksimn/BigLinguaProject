@@ -7,14 +7,10 @@ namespace BigLinguaProject.UI.ViewModels {
         }
         public NotebookIndexViewModel(String username, 
                                       List<NotebookDescription> notebooks, 
-                                      ILangListInitializer langInit = null) {
+                                      IEnumerable<LanguageDescription> langs) {
             UserName = username;
             Notebooks = notebooks;
-            if (langInit == null) {
-                LangList = new MockLangListInitializer().Initialize();
-            } else {
-                LangList = langInit.Initialize();
-            }
+            LangList = langs;
         }
         public String UserName { get; set; }
         public List<NotebookDescription> Notebooks { get; set; }
@@ -31,21 +27,6 @@ namespace BigLinguaProject.UI.ViewModels {
         public String EnglishName { get; set; }
         public override String ToString() {
             return String.Format("{0} / {1}", Name, EnglishName);
-        }
-    }
-
-    public interface ILangListInitializer {
-        IEnumerable<LanguageDescription> Initialize();
-    }
-
-    public class MockLangListInitializer : ILangListInitializer {
-        public IEnumerable<LanguageDescription> Initialize() {
-            return new List<LanguageDescription> {
-                new LanguageDescription { Name = "English", EnglishName = "English" },
-                new LanguageDescription { Name = "Deutsch", EnglishName = "German" },
-                new LanguageDescription { Name = "Français", EnglishName = "French" },
-                new LanguageDescription { Name = "Русский", EnglishName = "Russian" }
-            };
         }
     }
 }
