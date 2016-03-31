@@ -28,14 +28,13 @@
             <label><b>Add a notebook</b></label>
             <br />
             <label>Language 1 (for learning):</label>
-            @Html.DropDownList("language1", new SelectList(Model.LangList))
+            @Html.DropDownList("TargetLanguage", new SelectList(Model.LangList))
             <br />
             <label>Language 2 (for explanations):</label>
-            @Html.DropDownList("language2", new SelectList(Model.LangList))
+            @Html.DropDownList("BaseLanguage", new SelectList(Model.LangList))
             <br />
             <input type="submit" value="Add" />
             <br />
-            @Html.HiddenFor(m => m.UserName)
         }
     </div>
 </div>

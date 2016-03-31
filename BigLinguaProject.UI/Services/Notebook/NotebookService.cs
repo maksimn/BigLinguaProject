@@ -14,7 +14,7 @@ namespace BigLinguaProject.UI.Services {
             dataSource.Dispose();
         }
 
-        public NotebookIndexViewModel GetNotebookIndexViewModel(string userName) {
+        public NotebookIndexViewModel GetNotebookIndexViewModel(String userName) {
             // Здесь для модели представления список тетрадей и языков должен браться из источника данных,
             // т.е. базы данных (список тетрадей, принадлежащих данному пользователю и общий список языков) 
             // или поддельного источника данных.
@@ -25,6 +25,14 @@ namespace BigLinguaProject.UI.Services {
                 langs: dataSource.GetListOfLanguages()
             );
             return viewModel;
+        }
+
+        public IEnumerable<LanguageDescription> GetListOfLanguages() {
+            return dataSource.GetListOfLanguages();
+        }
+
+        public void AddNotebook(NotebookDescription notebookToAdd) {
+            dataSource.AddNotebook(notebookToAdd);
         }
     }
 }

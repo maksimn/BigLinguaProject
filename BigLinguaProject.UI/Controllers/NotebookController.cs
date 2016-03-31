@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
@@ -13,15 +14,19 @@ namespace BigLinguaProject.UI.Controllers {
         [AuthorizedUsersOnly]
         public ActionResult Index() {
             String userName = Session["username"] as String;
-
-            NotebookIndexViewModel viewModel = service.GetNotebookIndexViewModel(userName);
-           
+            NotebookIndexViewModel viewModel = service.GetNotebookIndexViewModel(userName);           
             return View(viewModel);
         }
 
         [AuthorizedUsersOnly]
         [HttpPost]
-        public ActionResult Add(NotebookIndexViewModel viewModel, String language1, String language2) {
+        public ActionResult Add(String targetLanguage, String baseLanguage) {
+            LanguageDescription targetLang = new LanguageDescription(targetLanguage), 
+                                baseLang = new LanguageDescription(baseLanguage);
+            var notebookToAdd = new NotebookDescription { BaseLanguage = baseLang, TargetLanguage = targetLang };
+            
+            service.AddNotebook(notebookToAdd);
+
             return RedirectToAction("index");
         }
 

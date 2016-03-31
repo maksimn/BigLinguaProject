@@ -7,5 +7,6 @@ namespace BigLinguaProject.UI.Services {
     public interface INotebookDataSource : IDisposable {
         List<NotebookDescription> GetListOfNotebooksForUser(String userName);
         IEnumerable<LanguageDescription> GetListOfLanguages();
+        void AddNotebook(NotebookDescription notebookToAdd);
     }
 }
