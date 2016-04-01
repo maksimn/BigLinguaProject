@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 
@@ -9,11 +8,16 @@ using BigLinguaProject.UI.ViewModels;
 
 namespace BigLinguaProject.UI.Controllers {
     public class NotebookController : Controller {
-        private NotebookService service = new NotebookService();
+        private NotebookService service;
+
+        public NotebookController() {
+            service = new NotebookService();
+            service.SetStateSource(HttpContext.Cache);
+        }
 
         [AuthorizedUsersOnly]
         public ActionResult Index() {
-            String userName = Session["username"] as String;
+            String userName = GetUserName();
             NotebookIndexViewModel viewModel = service.GetNotebookIndexViewModel(userName);           
             return View(viewModel);
         }
@@ -21,13 +25,13 @@ namespace BigLinguaProject.UI.Controllers {
         [AuthorizedUsersOnly]
         [HttpPost]
         public ActionResult Add(String targetLanguage, String baseLanguage) {
-            LanguageDescription targetLang = new LanguageDescription(targetLanguage), 
-                                baseLang = new LanguageDescription(baseLanguage);
-            var notebookToAdd = new NotebookDescription { BaseLanguage = baseLang, TargetLanguage = targetLang };
-            
-            service.AddNotebook(notebookToAdd);
-
+            String userName = GetUserName();
+            service.AddNotebook(userName, new NotebookDescription(targetLanguage, baseLanguage));
             return RedirectToAction("index");
+        }
+
+        private String GetUserName() {
+            return Session["username"] as String;
         }
 
         protected override void Dispose(Boolean disposing) {

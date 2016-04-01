@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 
-using BigLinguaProject.UI.Models;
-using BigLinguaProject.UI.Models.Entities;
 using BigLinguaProject.UI.ViewModels;
 
 namespace BigLinguaProject.UI.Services {
@@ -12,6 +9,10 @@ namespace BigLinguaProject.UI.Services {
 
         public void Dispose() {
             dataSource.Dispose();
+        }
+
+        public void SetStateSource(Object source) {
+            dataSource.SetStateSource(source);
         }
 
         public NotebookIndexViewModel GetNotebookIndexViewModel(String userName) {
@@ -31,8 +32,8 @@ namespace BigLinguaProject.UI.Services {
             return dataSource.GetListOfLanguages();
         }
 
-        public void AddNotebook(NotebookDescription notebookToAdd) {
-            dataSource.AddNotebook(notebookToAdd);
+        public void AddNotebook(String userName, NotebookDescription notebookToAdd) {
+            dataSource.AddNotebook(userName, notebookToAdd);
         }
     }
 }

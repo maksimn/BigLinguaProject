@@ -21,6 +21,11 @@ namespace BigLinguaProject.UI.ViewModels {
     public class NotebookDescription {
         public LanguageDescription BaseLanguage { get; set; }
         public LanguageDescription TargetLanguage { get; set; }
+        public NotebookDescription() { }
+        public NotebookDescription(String targetLanguage, String baseLanguage) {
+            BaseLanguage = new LanguageDescription(baseLanguage);
+            TargetLanguage = new LanguageDescription(targetLanguage);
+        }
     }
 
     public class LanguageDescription {
