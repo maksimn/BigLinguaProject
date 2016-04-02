@@ -146,6 +146,7 @@
     <Content Include="App_Data\BigLinguaDb_log.ldf">
       <DependentUpon>BigLinguaDb.mdf</DependentUpon>
     </Content>
+    <Content Include="App_Data\TextFile.txt" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

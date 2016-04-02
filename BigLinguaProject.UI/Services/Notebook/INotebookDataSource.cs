@@ -8,6 +8,5 @@ namespace BigLinguaProject.UI.Services {
         List<NotebookDescription> GetListOfNotebooksForUser(String userName);
         IEnumerable<LanguageDescription> GetListOfLanguages();
         void AddNotebook(String userName, NotebookDescription notebookToAdd);
-        void SetStateSource(Object source);
     }
 }

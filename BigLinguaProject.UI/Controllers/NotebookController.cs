@@ -12,7 +12,6 @@ namespace BigLinguaProject.UI.Controllers {
 
         public NotebookController() {
             service = new NotebookService();
-            service.SetStateSource(HttpContext.Cache);
         }
 
         [AuthorizedUsersOnly]

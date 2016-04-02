@@ -6,10 +6,16 @@ using BigLinguaProject.UI.ViewModels;
 
 namespace BigLinguaProject.UI.Services {
     public class TestNotebookDataSource : INotebookDataSource {
-        private Cache cache;
+        private Dictionary<String, List<NotebookDescription>> userNotebooks;
+
         public List<NotebookDescription> GetListOfNotebooksForUser(String userName) {
-            return (List<NotebookDescription>)cache[userName];
+            // Считать userNotebook из текстового файла App_Data/TextFile.txt
+            // (Десериализовать из входного файлового потока)
+
+            // Вернуть данные для заданного пользователя
+            return userNotebooks[userName];
         }
+
         public IEnumerable<LanguageDescription> GetListOfLanguages() {
             return new List<LanguageDescription> {
                 new LanguageDescription { Name = "English", EnglishName = "English" },
@@ -18,16 +24,18 @@ namespace BigLinguaProject.UI.Services {
                 new LanguageDescription { Name = "Русский", EnglishName = "Russian" }
             };
         }
+
         public void Dispose() {
         }
 
         public void AddNotebook(String userName, NotebookDescription notebookToAdd) {
-            List<NotebookDescription> notebooks = cache[userName] as List<NotebookDescription>;
-            notebooks.Add(notebookToAdd);
-        }
+            // 1. Считать userNotebook из текстового файла App_Data/TextFile.txt
+            // (Десериализовать из входного файлового потока)
+            
+            // ... выполнение шага
 
-        public void SetStateSource(Object source) {
-            cache = (Cache)source;
+            userNotebooks[userName].Add(notebookToAdd);
+            // 3. Сериализовать в файловый поток коллекцию userNotebooks
         }
     }
 }
